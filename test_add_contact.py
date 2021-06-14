@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
 import unittest
+from contact import Contact
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
@@ -14,7 +15,7 @@ class UntitledTestCase(unittest.TestCase):
         driver = self.driver
         self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
-        self.setup_new_contact(driver, firstname="figu", middlename="fhug", lastname="ihfuge", mobile="74575")
+        self.setup_new_contact(driver, Contact(firstname="figu", middlename="fhug", lastname="ihfuge", mobile="74575"))
         self.submit_contact_creation(driver)
         self.return_home_page(driver)
         self.logout(driver)
@@ -30,22 +31,22 @@ class UntitledTestCase(unittest.TestCase):
         driver.find_element_by_name("pass").send_keys(password)
         driver.find_element_by_xpath("//input[@value='Login']").click()
 
-    def setup_new_contact(self, driver, firstname, middlename, lastname, mobile):
+    def setup_new_contact(self, driver, contact):
         # add new contact
         driver.find_element_by_link_text("add new").click()
         # filling information about new contact
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
-        driver.find_element_by_name("firstname").send_keys(firstname)
+        driver.find_element_by_name("firstname").send_keys(contact.firstname)
         driver.find_element_by_name("middlename").click()
         driver.find_element_by_name("middlename").clear()
-        driver.find_element_by_name("middlename").send_keys(middlename)
+        driver.find_element_by_name("middlename").send_keys(contact.middlename)
         driver.find_element_by_name("lastname").click()
         driver.find_element_by_name("lastname").clear()
-        driver.find_element_by_name("lastname").send_keys(lastname)
+        driver.find_element_by_name("lastname").send_keys(contact.lastname)
         driver.find_element_by_name("mobile").click()
         driver.find_element_by_name("mobile").clear()
-        driver.find_element_by_name("mobile").send_keys(mobile)
+        driver.find_element_by_name("mobile").send_keys(contact.mobile)
 
     def submit_contact_creation(self, driver):
         driver.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
