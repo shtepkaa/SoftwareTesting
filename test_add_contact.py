@@ -3,7 +3,7 @@ from selenium import webdriver
 import unittest
 from contact import Contact
 
-class UntitledTestCase(unittest.TestCase):
+class TestAddContact(unittest.TestCase):
     def setUp(self):
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
@@ -11,7 +11,7 @@ class UntitledTestCase(unittest.TestCase):
         self.verificationErrors = []
         self.accept_next_alert = True
     
-    def test_untitled_test_case(self):
+    def test_add_contact(self):
         driver = self.driver
         self.open_home_page(driver)
         self.login(driver, username="admin", password="secret")
