@@ -41,4 +41,5 @@ class ContactHelper:
 
     def select_first_contact(self):
         wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
         wd.find_element_by_name("selected[]").click()
