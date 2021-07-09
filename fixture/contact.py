@@ -1,3 +1,6 @@
+import time
+
+
 class ContactHelper:
 
     def __init__(self, app):
@@ -31,11 +34,14 @@ class ContactHelper:
         self.select_first_contact()
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
+        try:
+            wd.find_element_by_link_text('Record successful deleted')
+        except Exception:
+            time.sleep(1)
 
     def modify_first_contact(self, contact):
         wd = self.app.wd
         self.open_home_page()
-        self.select_first_contact()
         # push edit
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
         self.fill_contact_form(contact)
@@ -54,5 +60,5 @@ class ContactHelper:
 
     def open_home_page(self):
         wd = self.app.wd
-        if not (wd.current_url.endswith("/") and len(wd.find_elements_by_name("to_group")) > 0):
+        if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_name("to_group")) > 0):
             wd.find_element_by_link_text("home").click()

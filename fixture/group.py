@@ -1,3 +1,6 @@
+import time
+
+
 class GroupHelper:
 
     def __init__(self, app):
@@ -41,6 +44,10 @@ class GroupHelper:
         self.select_first_group()
         # submit delete
         wd.find_element_by_name("delete").click()
+        try:
+            wd.find_element_by_link_text('Group has been removed.')
+        except Exception:
+            time.sleep(1)
         self.return_to_group_page()
 
     def modify_first_group(self, group):
