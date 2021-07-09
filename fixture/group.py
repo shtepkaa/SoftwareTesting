@@ -45,7 +45,7 @@ class GroupHelper:
         # submit delete
         wd.find_element_by_name("delete").click()
         try:
-            wd.find_element_by_link_text('Group has been removed.')
+            wd.find_element_by_xpath("//*[text() = 'Group has been removed.']")
         except Exception:
             time.sleep(1)
         self.return_to_group_page()
@@ -70,3 +70,10 @@ class GroupHelper:
         wd = self.app.wd
         self.open_group_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_group_list(self):
+        wd = self.app.wd
+        self.open_group_page()
+        wd.find_elements_by_css_swlwctor("span.group")
+
+

@@ -35,7 +35,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         wd.switch_to_alert().accept()
         try:
-            wd.find_element_by_link_text('Record successful deleted')
+            wd.find_element_by_xpath("//*[text() = 'Record successful deleted']")
         except Exception:
             time.sleep(1)
 
