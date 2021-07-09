@@ -1,4 +1,5 @@
 import time
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -37,7 +38,7 @@ class ContactHelper:
         try:
             wd.find_element_by_xpath("//*[text() = 'Record successful deleted']")
         except Exception:
-            time.sleep(1)
+            time.sleep(0.1)
 
     def modify_first_contact(self, contact):
         wd = self.app.wd
@@ -62,3 +63,13 @@ class ContactHelper:
         wd = self.app.wd
         if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_name("to_group")) > 0):
             wd.find_element_by_link_text("home").click()
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_home_page()
+        contacts = []
+        for element in wd.find_element_by_xpath("//div[@class='center']"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            contacts.append(Contact(name=text, id=id))
+        return contacts

@@ -1,4 +1,5 @@
-import time
+# import time
+from model.group import Group
 
 
 class GroupHelper:
@@ -44,10 +45,7 @@ class GroupHelper:
         self.select_first_group()
         # submit delete
         wd.find_element_by_name("delete").click()
-        try:
-            wd.find_element_by_xpath("//*[text() = 'Group has been removed.']")
-        except Exception:
-            time.sleep(1)
+        wd.find_element_by_xpath("//*[text() = 'Group has been removed.']")
         self.return_to_group_page()
 
     def modify_first_group(self, group):
@@ -74,6 +72,12 @@ class GroupHelper:
     def get_group_list(self):
         wd = self.app.wd
         self.open_group_page()
-        wd.find_elements_by_css_swlwctor("span.group")
+        groups = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups.append(Group(name=text, id=id))
+        return groups
+
 
 
