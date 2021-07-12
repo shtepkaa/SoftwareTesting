@@ -1,4 +1,5 @@
 from model.contact import Contact
+from random import randrange
 
 
 def check_exist(app):
@@ -9,12 +10,13 @@ def check_exist(app):
 def test_modify_first_contact(app):
     check_exist(app)
     old_contacts = app.contact.get_contact_list()
+    index = randrange(len(old_contacts))
     contact = Contact(firstname="1", middlename="1", lastname="1", mobile="1")
-    contact.id = old_contacts[0].id
-    app.contact.modify_first_contact(contact)
+    contact.id = old_contacts[index].id
+    app.contact.modify_contact_by_index(index, contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
-    old_contacts[0] = contact
+    old_contacts[index] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(old_contacts, key=Contact.id_or_max)
 
 
