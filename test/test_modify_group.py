@@ -1,6 +1,7 @@
 from model.group import Group
 from random import randrange
 
+
 def check_exist(app):
     if app.group.count() == 0:
         app.group.create(Group(name="test"))
