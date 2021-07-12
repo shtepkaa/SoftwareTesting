@@ -15,6 +15,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.open_home_page()
 
     def fill_contact_form(self, contact):
         self.change_field_value("firstname", contact.firstname)
@@ -69,8 +70,8 @@ class ContactHelper:
         self.open_home_page()
         contacts = []
         for element in wd.find_elements_by_name("entry"):
-            first_name = element.find_elements_by_tag_name("td")[1].text
-            last_name = element.find_elements_by_tag_name("td")[2].text
+            last_name = element.find_elements_by_tag_name("td")[1].text
+            first_name = element.find_elements_by_tag_name("td")[2].text
             id = element.find_element_by_name("selected[]").get_attribute("value")
             contacts.append(Contact(firstname=first_name, lastname=last_name, id=id))
         return contacts
