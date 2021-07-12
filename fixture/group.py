@@ -1,4 +1,4 @@
-# import time
+import time
 from model.group import Group
 
 
@@ -45,7 +45,10 @@ class GroupHelper:
         self.select_first_group()
         # submit delete
         wd.find_element_by_name("delete").click()
-        wd.find_element_by_xpath("//*[text() = 'Group has been removed.']")
+        try:
+            wd.find_element_by_xpath("//*[text() = 'Group has been removed.']")
+        except Exception:
+            time.sleep(1)
         self.return_to_group_page()
 
     def modify_first_group(self, group):
