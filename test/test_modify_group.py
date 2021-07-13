@@ -2,13 +2,13 @@ from model.group import Group
 from random import randrange
 
 
-def check_exist(app):
+def check_empty_filling(app):
     if app.group.count() == 0:
         app.group.create(Group(name="test"))
 
 
 def test_modify_first_group(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_groups = app.group.get_group_list()
     index = randrange(len(old_groups))
     group = Group(name="1", header="1", footer="1")
@@ -22,7 +22,7 @@ def test_modify_first_group(app):
 
 """
 def test_modify_name_first_group(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_groups = app.group.get_group_list()
     app.group.modify_first_group(Group(name="new name"))
     new_groups = app.group.get_group_list()
@@ -30,7 +30,7 @@ def test_modify_name_first_group(app):
 
 
 def test_modify_header_first_group(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_groups = app.group.get_group_list()
     app.group.modify_first_group(Group(header="new header"))
     new_groups = app.group.get_group_list()
@@ -38,7 +38,7 @@ def test_modify_header_first_group(app):
 
 
 def test_modify_footer_first_group(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_groups = app.group.get_group_list()
     app.group.modify_first_group(Group(footer="new footer"))
     new_groups = app.group.get_group_list()

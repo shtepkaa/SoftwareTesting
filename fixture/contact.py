@@ -27,6 +27,10 @@ class ContactHelper:
         self.change_field_value("home", contact.homephone)
         self.change_field_value("work", contact.workphone)
         self.change_field_value("phone2", contact.secondaryphone)
+        self.change_field_value("address", contact.address)
+        self.change_field_value("email", contact.email)
+        self.change_field_value("email2", contact.email2)
+        self.change_field_value("email3", contact.email3)
 
     def change_field_value(self, field_name, text):
         wd = self.app.wd
@@ -57,7 +61,7 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         # push edit
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(contact)
         # submit contact update
         wd.find_element_by_name("update").click()
@@ -65,9 +69,6 @@ class ContactHelper:
 
     def select_first_contact(self):
         self.select_contact_by_index(0)
-        # wd = self.app.wd
-        # self.open_home_page()
-        # wd.find_element_by_name("selected[]").click()
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
@@ -98,7 +99,11 @@ class ContactHelper:
                 # id = row.find_element_by_name("selected[]").get_attribute("value")
                 id = cell[0].find_element_by_tag_name("input").get_attribute("value")
                 all_phones = cell[5].text
-                self.contact_cache.append(Contact(firstname=first_name, lastname=last_name, id=id, all_phones_from_home_page=all_phones))
+                all_emails = cell[4].text
+                address = cell[3].text
+                self.contact_cache.append(Contact(firstname=first_name, lastname=last_name, id=id,
+                                                  all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails,
+                                                  address=address))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -125,9 +130,14 @@ class ContactHelper:
         mobile = wd.find_element_by_name('mobile').get_attribute('value')
         workphone = wd.find_element_by_name('work').get_attribute('value')
         secondaryphone = wd.find_element_by_name('phone2').get_attribute('value')
+        address = wd.find_element_by_name('address').get_attribute('value')
+        email = wd.find_element_by_name('email').get_attribute('value')
+        email2 = wd.find_element_by_name('email2').get_attribute('value')
+        email3 = wd.find_element_by_name('email3').get_attribute('value')
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        homephone=homephone, mobile=mobile, workphone=workphone,
-                       secondaryphone=secondaryphone)
+                       secondaryphone=secondaryphone, address=address,
+                       email=email, email2=email2, email3=email3)
 
     def get_contact_info_from_view_page(self, index):
         wd = self.app.wd

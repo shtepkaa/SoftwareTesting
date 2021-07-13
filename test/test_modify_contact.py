@@ -2,13 +2,13 @@ from model.contact import Contact
 from random import randrange
 
 
-def check_exist(app):
+def check_empty_filling(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(firstname="test"))
 
 
 def test_modify_first_contact(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
     contact = Contact(firstname="1", middlename="1", lastname="1", mobile="1")
@@ -22,7 +22,7 @@ def test_modify_first_contact(app):
 
 """
 def test_modify_firstname_first_contact(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_contacts = app.contact.get_contact_list()
     app.contact.modify_first_contact(Contact(firstname="firstname new"))
     new_contacts = app.contact.get_contact_list()
@@ -30,7 +30,7 @@ def test_modify_firstname_first_contact(app):
 
 
 def test_modify_middlename_first_contact(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_contacts = app.contact.get_contact_list()
     app.contact.modify_first_contact(Contact(middlename="middlename new"))
     new_contacts = app.contact.get_contact_list()
@@ -38,7 +38,7 @@ def test_modify_middlename_first_contact(app):
 
 
 def test_modify_lastname_first_contact(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_contacts = app.contact.get_contact_list()
     app.contact.modify_first_contact(Contact(lastname="lastname new"))
     new_contacts = app.contact.get_contact_list()
@@ -46,7 +46,7 @@ def test_modify_lastname_first_contact(app):
 
 
 def test_modify_mobile_first_contact(app):
-    check_exist(app)
+    check_empty_filling(app)
     old_contacts = app.contact.get_contact_list()
     app.contact.modify_first_contact(Contact(mobile="mobile new"))
     new_contacts = app.contact.get_contact_list()

@@ -3,8 +3,7 @@ from random import randrange
 
 
 def test_delete_some_group(app):
-    if app.group.count() == 0:
-        app.group.create(Group(name="test"))
+    check_empty_filling(app)
     old_groups = app.group.get_group_list()
     index = randrange(len(old_groups))
     app.group.delete_group_by_index(index)
@@ -12,3 +11,8 @@ def test_delete_some_group(app):
     assert len(old_groups)-1 == len(new_groups)
     old_groups[index:index+1] = []
     assert old_groups == new_groups
+
+
+def check_empty_filling(app):
+    if app.group.count() == 0:
+        app.group.create(Group(name="test"))
