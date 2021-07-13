@@ -1,5 +1,6 @@
 import time
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -90,11 +91,13 @@ class ContactHelper:
             wd = self.app.wd
             self.open_home_page()
             self.contact_cache = []
-            for element in wd.find_elements_by_name("entry"):
-                last_name = element.find_elements_by_tag_name("td")[1].text
-                first_name = element.find_elements_by_tag_name("td")[2].text
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                all_phones = element.find_elements_by_tag_name("td")[5].text.splitlines()
+            for row in wd.find_elements_by_name("entry"):
+                cell = row.find_elements_by_tag_name("td")
+                last_name = cell[1].text
+                first_name = cell[2].text
+                id = row.find_element_by_name("selected[]").get_attribute("value")
+                # id = cell[0].find_element_by_tag_name("input").get_attribute("value")
+                all_phones = cell[5].text.splitlines()
                 self.contact_cache.append(Contact(firstname=first_name, lastname=last_name, id=id,
                                                   homephone=all_phones[0], mobile=all_phones[1],
                                                   workphone=all_phones[2], secondaryphone=all_phones[3]))
@@ -127,5 +130,16 @@ class ContactHelper:
         return Contact(firstname=firstname, lastname=lastname, id=id,
                        homephone=homephone, mobile=mobile, workphone=workphone,
                        secondaryphone=secondaryphone)
+
+    def get_contact_info_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        mobile = re.search("M: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return Contact(homephone=homephone, mobile=mobile,
+                       workphone=workphone, secondaryphone=secondaryphone)
 
 
