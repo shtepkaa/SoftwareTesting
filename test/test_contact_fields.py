@@ -51,8 +51,10 @@ def test_address_on_home_page(app):
 
 def test_phones_on_contact_view_page(app):
     check_empty_filling(app)
-    contact_from_view_page = app.contact.get_contact_info_from_view_page(0)
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    index = randrange(len(app.contact.get_contact_list()))
+    # если нет элементов H, W и т.д выкидывает, в последующем нужно делать проверку
+    contact_from_view_page = app.contact.get_contact_info_from_view_page(index)
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_from_view_page.homephone == contact_from_edit_page.homephone
     assert contact_from_view_page.mobile == contact_from_edit_page.mobile
     assert contact_from_view_page.workphone == contact_from_edit_page.workphone
