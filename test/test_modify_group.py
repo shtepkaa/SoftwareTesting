@@ -14,11 +14,11 @@ def test_modify_some_group(app):
     group = Group(name="1", header="1", footer="1")
     group.id = old_groups[index].id
     app.group.modify_group_by_index(index, group)
+    assert len(old_groups) == app.group.count()
     new_groups = app.group.get_group_list()
-    assert len(old_groups) == len(new_groups)
+    # assert len(old_groups) == len(new_groups)
     old_groups[index] = group
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
-
 
 """
 def test_modify_name_first_group(app):
