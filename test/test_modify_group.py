@@ -7,7 +7,7 @@ def check_empty_filling(app):
         app.group.create(Group(name="test"))
 
 
-def test_modify_first_group(app):
+def test_modify_some_group(app):
     check_empty_filling(app)
     old_groups = app.group.get_group_list()
     index = randrange(len(old_groups))

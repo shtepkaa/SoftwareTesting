@@ -7,7 +7,7 @@ def check_empty_filling(app):
         app.contact.create(Contact(firstname="test"))
 
 
-def test_modify_first_contact(app):
+def test_modify_some_contact(app):
     check_empty_filling(app)
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
@@ -17,7 +17,7 @@ def test_modify_first_contact(app):
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == len(new_contacts)
     old_contacts[index] = contact
-    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(old_contacts, key=Contact.id_or_max)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
 """
