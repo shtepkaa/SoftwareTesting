@@ -16,6 +16,5 @@ def test_delete_some_group(app, db, check_ui):
 
 
 def check_empty_filling(app, db):
-    # if app.group.count() == 0:
     if len(db.get_group_list()) == 0:
         app.group.create(Group(name="test"))
