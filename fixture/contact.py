@@ -150,4 +150,20 @@ class ContactHelper:
         return Contact(homephone=homephone, mobile=mobile,
                        workphone=workphone, secondaryphone=secondaryphone)
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(id)
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
+        try:
+            wd.find_element_by_xpath("//*[text() = 'Record successful deleted']")
+        except Exception:
+            time.sleep(0.1)
+        self.contact_cache = None
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 

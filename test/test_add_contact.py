@@ -21,11 +21,8 @@ testdata = [
 
 @pytest.mark.parametrize("contact", testdata, ids=[repr(x) for x in testdata])
 def test_add_contact(app, db, contact, check_ui):
-    # old_contacts = app.contact.get_contact_list()
     old_contacts = db.get_contact_list()
     app.contact.create(contact)
-    # assert len(old_contacts)+1 == app.contact.count()
-    # new_contacts = app.contact.get_contact_list()
     new_contacts = db.get_contact_list()
     assert len(old_contacts) + 1 == len(new_contacts)
     old_contacts.append(contact)
