@@ -199,8 +199,6 @@ class ContactHelper:
             except Exception:
                  time.sleep(0.1)
 
-    def count_contacts_by_group_id(self, group_id, orm):
-        contacts = orm.get_contacts_in_group(Group(id='%s' % group_id))
-        return len(contacts)
+
 
 
