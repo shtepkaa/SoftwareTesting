@@ -1,6 +1,10 @@
 import time
 from model.contact import Contact
 import re
+# from selenium.webdriver.support.ui import Select
+from fixture.orm import ORMFixture
+from model.group import Group
+import random
 
 
 class ContactHelper:
@@ -166,4 +170,37 @@ class ContactHelper:
         wd = self.app.wd
         self.open_home_page()
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def add_contact_to_group_by_id(self, contact_id, random_group_number):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_id("%s" % contact_id).click()
+        wd.find_element_by_name("to_group").click()
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[4]/select/option[%s]" % random_group_number).click()
+        wd.find_element_by_name("add").click()
+        try:
+            wd.find_element_by_xpath("//*[text() = 'Users added']")
+        except Exception:
+            time.sleep(0.1)
+
+    def delete_contact_from_group_by_id(self, group_id, orm):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("group").click()
+        wd.find_element_by_xpath("//option[@value='%s']" % group_id).click()
+        if not wd.find_element_by_xpath("//div[@id='content']/label/strong/span[@id='search_count']").text == 0:
+            contacts = orm.get_contacts_in_group(Group(id='%s' % group_id))
+            random_contact_number = random.randint(0, len(contacts)-1)
+            contact_id = contacts[random_contact_number].id
+            wd.find_element_by_id("%s" % contact_id).click()
+            wd.find_element_by_name("remove").click()
+            try:
+                 wd.find_element_by_xpath("//*[text() = 'Users removed.']")
+            except Exception:
+                 time.sleep(0.1)
+
+    def count_contacts_by_group_id(self, group_id, orm):
+        contacts = orm.get_contacts_in_group(Group(id='%s' % group_id))
+        return len(contacts)
+
 
