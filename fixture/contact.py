@@ -63,7 +63,7 @@ class ContactHelper:
         # push edit
         wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(contact)
-        # submit contact update
+        # submit contact updateЗадание №20
         wd.find_element_by_name("update").click()
         self.contact_cache = None
 
@@ -167,3 +167,14 @@ class ContactHelper:
         self.open_home_page()
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
+    def modify_contact_by_id(self, id, modif_contact_info):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(id)
+        self.fill_contact_form(modif_contact_info)
+        wd.find_element_by_name("update").click()
+        try:
+            wd.find_element_by_xpath("//*[text() = 'Address book updated']")
+        except Exception:
+            time.sleep(0.1)
+        self.contact_cache = None

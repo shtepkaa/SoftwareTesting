@@ -10,10 +10,16 @@ def check_empty_filling(app, db):
 def test_modify_some_contact(app, db, check_ui):
     check_empty_filling(app, db)
     old_contacts = db.get_contact_list()
-    index = random.randrange(len(old_contacts))
-    contact = Contact(firstname="1", middlename="1", lastname="1", mobile="1")
-    app.contact.modify_contact_by_index(index, contact)
+    contact = random.choice(old_contacts)
+    index = old_contacts.index(contact)
+    modif_contact = Contact(firstname="new")
+    app.contact.modify_contact_by_id(contact.id, modif_contact)
     new_contacts = db.get_contact_list()
+
+    # have to set these parameters before assert
+    old_contacts[index] = modif_contact
+    old_contacts[index].id = new_contacts[index].id
+
     assert len(old_contacts) == len(new_contacts)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
     if check_ui:
