@@ -14,7 +14,7 @@ def test_compare_all_contact_info(app, db):
         assert contact_from_home_page.firstname == contact_from_db.firstname
         assert contact_from_home_page.lastname == contact_from_db.lastname
         assert contact_from_home_page.address == contact_from_db.address
-        assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db.all_phones_from_home_page)
+        assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db)
         assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_db)
 
 
