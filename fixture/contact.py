@@ -170,7 +170,7 @@ class ContactHelper:
     def modify_contact_by_id(self, id, modif_contact_info):
         wd = self.app.wd
         self.open_home_page()
-        self.select_contact_by_id(id)
+        self.open_contact_to_edit_by_id(id)
         self.fill_contact_form(modif_contact_info)
         wd.find_element_by_name("update").click()
         try:
@@ -178,3 +178,7 @@ class ContactHelper:
         except Exception:
             time.sleep(0.1)
         self.contact_cache = None
+
+    def open_contact_to_edit_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector('a[href="edit.php?id=%s"]' % id).click()
