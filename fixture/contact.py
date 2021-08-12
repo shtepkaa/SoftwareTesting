@@ -182,3 +182,16 @@ class ContactHelper:
     def open_contact_to_edit_by_id(self, id):
         wd = self.app.wd
         wd.find_element_by_css_selector('a[href="edit.php?id=%s"]' % id).click()
+
+    def add_contact_to_group_by_id(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_id("%s" % contact_id).click()
+        wd.find_element_by_name("to_group").click()
+        wd.find_element_by_css_selector("select[name = 'to_group'] > option[value = '%s']" % group_id).click()
+        wd.find_element_by_name("add").click()
+        try:
+            wd.find_element_by_xpath("//*[text() = 'Users added.']")
+        except Exception:
+            time.sleep(0.1)
+
