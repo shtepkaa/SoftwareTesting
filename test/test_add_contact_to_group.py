@@ -23,7 +23,8 @@ def test_add_contact_to_group(app, db):
     groups = db.get_group_list()
     group = random.choice(groups)
 
-    contacts_in_group_before_add = app.contact.add_contact_to_group_by_id(contact.id, group.id)
+    contacts_in_group_before_add = orm.get_contacts_in_group(group)
+    app.contact.add_contact_to_group_by_id(contact.id, group.id)
     contacts_in_group_after_add = orm.get_contacts_in_group(group)
 
     assert len(contacts_in_group_before_add) + 1 == len(contacts_in_group_after_add)
