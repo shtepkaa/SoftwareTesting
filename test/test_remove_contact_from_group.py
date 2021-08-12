@@ -13,17 +13,13 @@ def check_empty_filling(app, db):
         app.group.create(Group(name="test"))
 
 
-def test_add_contact_to_group(app, db):
+def test_delete_contact_from_group(app, db):
     global orm
     check_empty_filling(app, db)
-
-    contacts = db.get_contact_list()
-    contact = random.choice(contacts)
-
     groups = db.get_group_list()
     group = random.choice(groups)
-
-    contacts_in_group_before_add = app.contact.add_contact_to_group_by_id(contact.id, group.id)
-    contacts_in_group_after_add = orm.get_contacts_in_group(group)
-
-    assert len(contacts_in_group_before_add) + 1 == len(contacts_in_group_after_add)
+    app.contact.check_number_contacts_in_group(db, group)
+    contacts_in_group_before_delete = orm.get_contacts_in_group(group)
+    app.contact.remove_contact_from_group_by_id(group, orm, db)
+    contacts_in_group_after_delete = orm.get_contacts_in_group(group)
+    assert len(contacts_in_group_before_delete) - 1 == len(contacts_in_group_after_delete)

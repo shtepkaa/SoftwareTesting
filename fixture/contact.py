@@ -1,6 +1,7 @@
 import time
 from model.contact import Contact
 import re
+import random
 
 
 class ContactHelper:
@@ -83,7 +84,8 @@ class ContactHelper:
     def open_home_page(self):
         wd = self.app.wd
         if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_name("to_group")) > 0):
-            wd.find_element_by_link_text("home").click()
+            # wd.find_element_by_link_text("home").click()
+            wd.get(self.app.base_url)
 
     contact_cache = None
 
@@ -194,4 +196,28 @@ class ContactHelper:
             wd.find_element_by_xpath("//*[text() = 'Users added.']")
         except Exception:
             time.sleep(0.1)
+        self.open_home_page()
 
+    def remove_contact_from_group_by_id(self, group, orm, db):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("group").click()
+        wd.find_element_by_xpath("//option[@value='%s']" % group.id).click()
+        contacts = orm.get_contacts_in_group(group)
+        contact = random.choice(contacts)
+        wd.find_element_by_id("%s" % contact.id).click()
+        wd.find_element_by_name("remove").click()
+        try:
+             wd.find_element_by_xpath("//*[text() = 'Users removed.']")
+        except Exception:
+             time.sleep(0.1)
+
+    def check_number_contacts_in_group(self, db, group):
+        wd = self.app.wd
+        self.open_home_page()
+        wd.find_element_by_name("group").click()
+        wd.find_element_by_xpath("//option[@value='%s']" % group.id).click()
+        if wd.find_element_by_xpath("//div[@id='content']/label/strong/span[@id='search_count']").text == str(0):
+            contacts = db.get_contact_list()
+            contact = random.choice(contacts)
+            self.app.contact.add_contact_to_group_by_id(contact.id, group.id)
