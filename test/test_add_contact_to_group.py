@@ -17,11 +17,14 @@ def test_add_contact_to_group(app, db):
     global orm
     check_empty_filling(app, db)
 
-    contacts = db.get_contact_list()
-    contact = random.choice(contacts)
-
     groups = db.get_group_list()
     group = random.choice(groups)
+
+    contacts = orm.get_contacts_not_in_group(group)
+    if len(contacts) == 0:
+        app.contact.create(Contact(firstname="test"))
+        contacts = orm.get_contacts_not_in_group(group)
+    contact = random.choice(contacts)
 
     contacts_in_group_before_add = orm.get_contacts_in_group(group)
     app.contact.add_contact_to_group_by_id(contact.id, group.id)
