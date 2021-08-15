@@ -33,7 +33,7 @@ class DbFixture:
                            "email, email2, email3 from addressbook")
             "where deprecated = '0000-00-00 00:00:00' ставить бесполезно, сейчас запись в БД тоже удаляется"
             for row in cursor:
-                (id, firstname, lastname, homephone, mobile, workphone, secondaryphone, address,
+                (id, firstname, lastname, address, homephone, mobile, workphone, secondaryphone,
                  email, email2, email3) = row
                 list.append(Contact(id=str(id), firstname=firstname, lastname=lastname,
                                     homephone=homephone, mobile=mobile, workphone=workphone,
