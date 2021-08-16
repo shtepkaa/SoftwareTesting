@@ -1,0 +1,37 @@
+(env) D:\GitHub\SoftwareTesting\SoftwareTesting>py.test --alluredir allure-results test
+========================================================================================================== test session starts ===========================================================================================================
+platform win32 -- Python 3.9.6, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: D:\GitHub\SoftwareTesting\SoftwareTesting
+plugins: allure-pytest-2.9.43
+collected 20 items                                                                                                                                                                                                                        
+
+test\test_add_contact.py ......                                                                                                                                                                                                     [ 30%]
+test\test_add_contact_to_group.py .                                                                                                                                                                                                 [ 35%]
+test\test_add_group.py ......                                                                                                                                                                                                       [ 65%]
+test\test_contact_fields.py .                                                                                                                                                                                                       [ 70%]
+test\test_db_matches_ui.py .                                                                                                                                                                                                        [ 75%]
+test\test_del_contact.py .                                                                                                                                                                                                          [ 80%]
+test\test_del_group.py .                                                                                                                                                                                                            [ 85%]
+test\test_modify_contact.py .                                                                                                                                                                                                       [ 90%]
+test\test_modify_group.py .                                                                                                                                                                                                         [ 95%]
+test\test_remove_contact_from_group.py .                                                                                                                                                                                            [100%]
+
+============================================================================================================ warnings summary ============================================================================================================
+env\lib\site-packages\pony\thirdparty\compiler\transformer.py:32
+  d:\github\softwaretesting\softwaretesting\env\lib\site-packages\pony\thirdparty\compiler\transformer.py:32: DeprecationWarning: The parser module is deprecated and will be removed in future versions of Python
+    import parser
+
+env\lib\site-packages\pony\thirdparty\compiler\transformer.py:33
+  d:\github\softwaretesting\softwaretesting\env\lib\site-packages\pony\thirdparty\compiler\transformer.py:33: DeprecationWarning: The symbol module is deprecated and will be removed in future versions of Python
+    import symbol
+
+test/test_del_contact.py::test_delete_some_contact
+  D:\GitHub\SoftwareTesting\SoftwareTesting\fixture\contact.py:160: DeprecationWarning: use driver.switch_to.alert instead
+    wd.switch_to_alert().accept()
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+==================================================================================================== 20 passed, 3 warnings in 38.38s =====================================================================================================
+
+(env) D:\GitHub\SoftwareTesting\SoftwareTesting>
+(env) D:\GitHub\SoftwareTesting\SoftwareTesting>C:\allure-2.14.0\bin\allure.bat generate allure-results
+Report successfully generated to allure-report
