@@ -1,9 +1,9 @@
 from model.contact import Contact
 from model.group import Group
 import random
-from fixture.orm import ORMFixture
+# from fixture.orm import ORMFixture
 
-orm = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
+# orm = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 
 def check_empty_filling(app, db):
@@ -13,8 +13,8 @@ def check_empty_filling(app, db):
         app.group.create(Group(name="test"))
 
 
-def test_delete_contact_from_group(app, db):
-    global orm
+def test_delete_contact_from_group(app, db, orm):
+    # global orm
     check_empty_filling(app, db)
     groups = db.get_group_list()
     group = random.choice(groups)
